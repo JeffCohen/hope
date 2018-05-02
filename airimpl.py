@@ -17,6 +17,7 @@ def sell(city, date, row):
     date = month.rjust(2, '0') + '-' + day.rjust(2, '0')
     row = int(row)
     filenm = f"{city}-{date}.txt"
+    # create new flight seating file if necc.
     if not os.path.exists(filenm):
         with open(f"{city}-{date}.txt",'w') as out:
             for i in range(25):
@@ -27,6 +28,7 @@ def sell(city, date, row):
     rows = [] # count how many open seats in each row
     stchart = [] # seating chart
 
+    # load flight seating file into memory
     with open(filenm) as f:
         for line in f:
             if line.length > 0:
@@ -49,6 +51,7 @@ def sell(city, date, row):
     st_indx = seats.index("O")
     seats = seats[:st_indx] + "X" + seats[st_indx + 1:]
     stchart[row-1] = seats
+    # save updated flight seating file
     with open(filenm, "w") as f:
         for r in stchart:
             f.write(r)
